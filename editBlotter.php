@@ -104,8 +104,8 @@
                             $bAssist = $_POST['bAssist'];
                             $bStatus = $_POST['bStatus'];
 
-                            $query = "UPDATE tblResidents SET bComp= '$bComp',bLoc= '$bLoc',bPers= '$bPers,
-                            bReason= '$bReason',bAction= '$bAction',bAssist= '$bAssist',bStatus= '$bStatus',
+                            $query = "UPDATE tblBlotter SET bComp = '$bComp', bLoc= '$bLoc', bPers= '$bPers',
+                            bReason= '$bReason', bAction= '$bAction', bAssist= '$bAssist', bStatus= '$bStatus'
                             WHERE bID = '$id'";
 
                             $result = mysqli_query($conn, $query);

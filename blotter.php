@@ -90,9 +90,9 @@
                 <span>Main Menu</span>
                 <a href="officials.php">Brgy. Officials</a>
                 <a href="residents.php">Residents Info</a>
-                <a href=""  class="active">Blotter Records</a>
-                <a href="l">Clearances</a>
-                <a href="">Permits</a>
+                <a href="blotter.php" class="active">Blotter Records</a>
+                <a href="clearance.php">Clearances</a>
+                <a href="permit.php">Permits</a>
                 <span></span>
 
                 <div class="links">

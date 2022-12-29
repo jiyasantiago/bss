@@ -90,10 +90,10 @@
             <div class="side_navbar">
                 <span>Main Menu</span>
                 <a href="officials.php">Brgy. Officials</a>
-                <a href="residents.php"  class="active">Residents Info</a>
+                <a href="residents.php" class="active">Residents Info</a>
                 <a href="blotter.php">Blotter Records</a>
-                <a href="l">Clearances</a>
-                <a href="">Permits</a>
+                <a href="clearance.php">Clearances</a>
+                <a href="permit.php">Permits</a>
                 <span></span>
 
                 <div class="links">
@@ -110,6 +110,12 @@
                 <div class="list1">
                     <div class="row">
                         <h4>Profiling Records</h4>
+                        <div class="search_box">
+                            <input type="text" id="search" name="search" placeholder="Search">
+                            <button type="submit" name="search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                         <div class="add">
                             <a href="addResident.php"><button>Add Resident</button></a>
                         </div>

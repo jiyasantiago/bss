@@ -2,12 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barangay Sampaloc Information System (BSIS)</title>
-    <link rel="stylesheet" href="sections.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta charset="UTF-8" />
+    <title>Profiling</title>
+    <link rel="stylesheet" href="sections.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+
     <style>
         /* Main Body Section */
         .main-body {
@@ -15,17 +14,7 @@
             padding: 1rem;
         }
 
-        .promo_card {
-            width: 90%;
-            color: #fff;
-            margin-top: 10px;
-            border-radius: 8px;
-            padding: 0.5rem 1rem 1rem 3rem;
-            background: #0052a2;
-        }
-
         .add button {
-            display: inline;
             background: #0052a2;
             color: white;
             padding: 6px 12px;
@@ -33,15 +22,8 @@
             cursor: pointer;
         }
 
-        .promo_card h1,
-        .promo_card span,
-        button {
-            margin: 10px;
-        }
-
         .list {
-            width: 70%;
-            display: flex;
+            width: 90%;
             align-items: center;
             justify-content: space-between;
         }
@@ -50,13 +32,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 1rem 0;
         }
 
         /*Table*/
 
         table {
-            width: 10%;
+            display: block;
+            overflow-y: scroll;
+            width: 100%;
+            height: 530px;
             font-size: 15px;
             color: #000;
             background: #fff;
@@ -72,13 +56,17 @@
 
         table,
         th {
-            padding: 1rem 2.5rem;
+            table-layout: fixed;
+            padding: 1rem 0rem 2rem 1rem;
+            text-align: center;
             justify-content: center;
         }
 
         td {
-            padding: 1rem 1rem;
-            justify-content: left;
+            table-layout: fixed;
+            padding: 1rem 2rem;
+            text-align: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -101,10 +89,10 @@
         <nav>
             <div class="side_navbar">
                 <span>Main Menu</span>
-                <a href="officials.php" class="active">Brgy. Officials</a>
+                <a href="officials.php">Brgy. Officials</a>
                 <a href="residents.php">Residents Info</a>
                 <a href="blotter.php">Blotter Records</a>
-                <a href="clearance.php">Clearances</a>
+                <a href="clearance.php" class="active">Clearances</a>
                 <a href="permit.php">Permits</a>
                 <span></span>
 
@@ -118,46 +106,49 @@
         </nav>
 
         <div class="main-body">
-            <div class="promo_card">
-                <h1>Barangay Officials</h1>
-            </div>
-
             <div class="list">
                 <div class="list1">
                     <div class="row">
-
-                        <h4>2018-2023</h4>
+                        <h4>Barangay Clearance</h4>
+                        <div class="search_box">
+                            <input type="text" id="search" name="search" placeholder="Search">
+                            <button type="submit" name="search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Position</th>
-                                <th>Name</th>
-                                <th>Contact Number</th>
-                                <th>Address</th>
-                                <th>Start of Term</th>
-                                <th>End of Term</th>
+                                <th>Clearance #</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Findings</th>
+                                <th>Purpose</th>
+                                <th>Amount</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             include('config.php');
-                            $sql = "SELECT * FROM tblOfficials";
+                            $sql = "SELECT * FROM tblClearance";
                             $result = mysqli_query($conn, $sql);
                             while ($data = mysqli_fetch_array($result)) {
                             ?>
                                 <tr>
-                                    <td><?php echo $data['oPosi']; ?></td>
-                                    <td><?php echo $data['oName']; ?></td>
-                                    <td><?php echo $data['oCont']; ?></td>
-                                    <td><?php echo $data['oAdd']; ?></td>
-                                    <td><?php echo $data['oTermS']; ?></td>
-                                    <td><?php echo $data['oTermE']; ?></td>
+                                    <td><?php echo $data['cNum']; ?></td>
+                                    <td><?php echo $data['cRFirst']; ?></td>
+                                    <td><?php echo $data['cRLast']; ?></td>
+                                    <td><?php echo $data['cFindings']; ?></td>
+                                    <td><?php echo $data['cPurpose']; ?></td>
+                                    <td><?php echo $data['cAmount']; ?></td>
+                                    <td><?php echo $data['cStatus']; ?></td>
                                     <td>
                                         <div class="add">
-                                            <a href="editOfficials.php?oPosi=<?php echo $data['oPosi']; ?>">
-                                                <button><i class="fas fa-pen"></i></button>
+                                            <a href="viewResident.php?cNum=<?php echo $data['cNum']; ?>">
+                                                <button><i class="fa fa-eye"></i></button>
                                             </a>
                                         </div>
                                     </td>

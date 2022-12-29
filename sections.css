@@ -1,4 +1,3 @@
-/*  import google fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 * {
@@ -38,6 +37,28 @@ body {
 
 }
 
+.search_box {
+    display: flex;
+    align-items: center;
+}
+
+.search_box input {
+    padding: 9px;
+    width: 250px;
+    background: rgb(228, 228, 228);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.search_box i {
+    padding: 0.66rem;
+    cursor: pointer;
+    color: #fff;
+    background: #0052a2;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .header-icons {
     display: flex;
     align-items: center;
@@ -67,7 +88,6 @@ body {
     justify-content: space-between;
 }
 
-/* Side menubar section */
 nav {
     background: #fff;
 }
@@ -111,6 +131,8 @@ nav {
     border-left: 2px solid rgb(100, 100, 100);
     color: #0052a2;
 }
+
+
 
 tr {
     border-bottom: 1px solid #dddddd;
