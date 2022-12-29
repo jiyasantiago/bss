@@ -159,7 +159,6 @@
                             $rOccup = $_POST['rOccup'];
                             $rCitizen = $_POST['rCitizen'];
 
-                            // mysql query to Update data
                             $query = "UPDATE tblResidents SET 
                             rFirst= '$rFirst',
                             rMid= '$rMid',

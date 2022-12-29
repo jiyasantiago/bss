@@ -26,9 +26,9 @@
         <nav>
             <div class="side_navbar">
                 <span>Main Menu</span>
-                <a href="officials.php" class="active">Brgy. Officials</a>
+                <a href="officials.php">Brgy. Officials</a>
                 <a href="residents.php">Residents Info</a>
-                <a href="">Blotter Records</a>
+                <a href="" class="active">Blotter Records</a>
                 <a href="l">Clearances</a>
                 <a href="">Permits</a>
                 <span></span>
@@ -45,39 +45,44 @@
         <div class="main-body">
             <div class="promo_card">
                 <?php
-                if (isset($_GET['oPosi'])) {
-                    $posi = $_GET['oPosi'];
-                }
+                $id = $_GET['bID'];
                 ?>
-                <h1><?php echo $posi; ?></h1>
+                <h1>Edit Blotter #<?php echo $id ?></h1>
             </div>
 
             <div class="list">
                 <div class="list1">
                     <div class="row">
-                        <a href="officials.php">Back</a>
+                        <a href="blotter.php">Back</a>
                     </div>
                     <div class="wrapper">
                         <form action="" method="post">
-
                             <div class="left">
+                                <label for="bComp">Complainant</label>
+                                <input type="text" id="bComp" name="bComp" placeholder="Enter Complainant's Name" required>
 
-                                <label for="oName">Name</label>
-                                <input type="text" id="oName" name="oName" placeholder="Enter Official's Name" required>
+                                <label for="bPers">Person to Complain</label>
+                                <input type="text" id="bPers" name="bPers" placeholder="Enter Accused Person's Name" required>
 
-                                <label for="">Address</label>
-                                <input type="text" id="oAdd" name="oAdd" placeholder="Enter Address" required>
+                                <label for="bAction">Action Made</label>
+                                <input type="text" id="bAction" name="bAction" placeholder="Enter Action Made" required>
 
-                                <label for="oTermE">End of Term</label>
-                                <input type="date" id="oTermE" name="oTermE" required>
-
+                                <label for="bStatus">Status</label>
+                                <select name="bStatus" id="bStatus" required>
+                                    <option value="" disabled selected hidden>Select Status</option>
+                                    <option value="Solved">Solved</option>
+                                    <option value="Unsolved">Unsolved</option>
+                                </select>
                             </div>
                             <div class="right">
-                                <label for="oCont">Contact Number</label>
-                                <input type="number" id="oCont" name="oCont" placeholder="Enter Contact Number" required>
+                                <label for="bLoc">Location</label>
+                                <input type="text" id="bLoc" name="bLoc" placeholder="Enter Location" required>
 
-                                <label for="oTermS">Start of Term</label>
-                                <input type="date" id="oTermS" name="oTermS" required>
+                                <label for="bReason">Reason</label>
+                                <input type="text" id="bReason" name="bReason" placeholder="Enter Reason" required>
+
+                                <label for="bAssist">Attended By</label>
+                                <input type="text" id="bAssist" name="bAssist" placeholder="Enter Assistant" required>
 
                             </div>
                             <div class="submit">
@@ -86,16 +91,22 @@
                         </form>
 
                         <?php
-                        if (isset($_POST['save'])) {
-                            include("config.php");
-                            $oName = $_POST['oName'];
-                            $oCont = $_POST['oCont'];
-                            $oAdd = $_POST['oAdd'];
-                            $oTermS = $_POST['oTermS'];
-                            $oTermE = $_POST['oTermE'];
 
-                            $query = "UPDATE tblOfficials SET oName= '$oName', oCont= '$oCont' ,
-                                oAdd= '$oAdd' , oTermS= '$oTermS' , oTermE= '$oTermE' WHERE oPosi = '$posi'";
+                        if (isset($_POST['save'])) {
+
+                            include("config.php");
+
+                            $bComp = $_POST['bComp'];
+                            $bLoc = $_POST['bLoc'];
+                            $bPers = $_POST['bPers'];
+                            $bReason = $_POST['bReason'];
+                            $bAction = $_POST['bAction'];
+                            $bAssist = $_POST['bAssist'];
+                            $bStatus = $_POST['bStatus'];
+
+                            $query = "UPDATE tblResidents SET bComp= '$bComp',bLoc= '$bLoc',bPers= '$bPers,
+                            bReason= '$bReason',bAction= '$bAction',bAssist= '$bAssist',bStatus= '$bStatus',
+                            WHERE bID = '$id'";
 
                             $result = mysqli_query($conn, $query);
 

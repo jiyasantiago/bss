@@ -63,8 +63,7 @@
         }
 
         td {
-            table-layout: fixed;
-            padding: 1rem 2rem;
+            padding: 1rem 1.3rem;
             text-align: center;
             justify-content: center;
         }
@@ -90,8 +89,8 @@
             <div class="side_navbar">
                 <span>Main Menu</span>
                 <a href="officials.php">Brgy. Officials</a>
-                <a href="residents.php"  class="active">Residents Info</a>
-                <a href="blotter.php">Blotter Records</a>
+                <a href="residents.php">Residents Info</a>
+                <a href=""  class="active">Blotter Records</a>
                 <a href="l">Clearances</a>
                 <a href="">Permits</a>
                 <span></span>
@@ -109,48 +108,46 @@
             <div class="list">
                 <div class="list1">
                     <div class="row">
-                        <h4>Profiling Records</h4>
+                        <h4>Blotter Records</h4>
                         <div class="add">
-                            <a href="addResident.php"><button>Add Resident</button></a>
+                            <a href="addBlotter.php"><button>Add Blotter</button></a>
                         </div>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Alias</th>
-                                <th>Birthday</th>
-                                <th>Age</th>
+                                <th>Date</th>
+                                <th>Complainant</th>
+                                <th>Location</th>
+                                <th>Person to Complain</th>
+                                <th>Reason</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             include('config.php');
-                            $sql = "SELECT * FROM tblResidents";
+                            $sql = "SELECT * FROM tblBlotter";
                             $result = mysqli_query($conn, $sql);
                             while ($data = mysqli_fetch_array($result)) {
                             ?>
                                 <tr>
-                                    <td><?php echo $data['rID']; ?></td>
-                                    <td><?php echo $data['rFirst']; ?></td>
-                                    <td><?php echo $data['rMid']; ?></td>
-                                    <td><?php echo $data['rLast']; ?></td>
-                                    <td><?php echo $data['rAlias']; ?></td>
-                                    <td><?php echo $data['rBday']; ?></td>
-                                    <td><?php echo $data['rAge']; ?></td>
+                                    <td><?php echo $data['bID']; ?></td>
+                                    <td><?php echo $data['bDate']; ?></td>
+                                    <td><?php echo $data['bComp']; ?></td>
+                                    <td><?php echo $data['bLoc']; ?></td>
+                                    <td><?php echo $data['bPers']; ?></td>
+                                    <td><?php echo $data['bReason']; ?></td>
                                     <td>
                                         <div class="add">
-                                            <a href="viewResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="viewBlotter.php?bID=<?php echo $data['bID']; ?>">
                                                 <button><i class="fa fa-eye"></i></button>
                                             </a>
-                                            <a href="editResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="editBlotter.php?bID=<?php echo $data['bID']; ?>">
                                                 <button><i class="fa fa-pencil"></i></button>
                                             </a>
-                                            <a href="deleteResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="deleteBlotter.php?bID=<?php echo $data['bID']; ?>">
                                                 <button><i class="fa fa-trash"></i></button>
                                             </a>
                                         </div>
