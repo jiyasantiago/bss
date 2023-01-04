@@ -1,0 +1,47 @@
+<?php
+                            function filterTable($sql)
+                            {
+                                $conn = new mysqli("localhost", "root", "", "bsis");
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+                                $filter_Result = $conn->query($sql) or die($conn->error);
+                                return $filter_Result;
+                            }
+                            if (isset($_POST['search'])) {
+                                $valueToSearch = $_POST['valueToSearch'];
+
+                                $sql = "SELECT * FROM tblResidents WHERE CONCAT('rID', 'rFirst', 'rMid', 
+                                'rLast', 'rAlias', 'rBday', 'rBplace', 'rAge', 'rCivil', 'rGender', 'rHouse',
+                                'rPurok', 'rVoter', 'rPrecint', 'rPhilhealth', 'rEmail', 'rContact', 'rOccup',
+                                'rCitizen') LIKE ('%" . $valueToSearch . "%')";
+                                $search_result = filterTable($sql);
+                            } else {
+                                $sql = "SELECT * FROM tblResidents";
+                                $search_result = filterTable($sql);
+                            }
+
+                            while ($row = $search_result->fetch_assoc()) : ?>
+                                <tr>
+                                    <td><?php echo $row['rID']; ?></td>
+                                    <td><?php echo $row['rFirst']; ?></td>
+                                    <td><?php echo $row['rMid']; ?></td>
+                                    <td><?php echo $row['rLast']; ?></td>
+                                    <td><?php echo $row['rAlias']; ?></td>
+                                    <td><?php echo $row['rBday']; ?></td>
+                                    <td><?php echo $row['rAge']; ?></td>
+                                    <td>
+                                        <div class="add">
+                                            <a href="viewResident.php?rID=<?php echo $row['rID']; ?>">
+                                                <button><i class="fa fa-eye"></i></button>
+                                            </a>
+                                            <a href="editResident.php?rID=<?php echo $row['rID']; ?>">
+                                                <button><i class="fa fa-pencil"></i></button>
+                                            </a>
+                                            <a href="deleteResident.php?rID=<?php echo $row['rID']; ?>">
+                                                <button><i class="fa fa-trash"></i></button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>

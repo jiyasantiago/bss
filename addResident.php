@@ -18,9 +18,12 @@
         </div>
 
         <div class="header-icons">
-            <i class="fas fa-bell"></i>
             <div class="account">
-                <img src="user.png" alt="">
+                <a href="logout.php"><img src="logout2.png" alt=""></a>
+            </div>
+            <br>
+            <div>
+                <h5>&nbsp Logout</h5>
             </div>
         </div>
     </header>
@@ -29,7 +32,7 @@
             <div class="side_navbar">
                 <span>Main Menu</span>
                 <a href="officials.php">Brgy. Officials</a>
-                <a href="residents.php"  class="active">Residents Info</a>
+                <a href="residents.php" class="active">Residents Info</a>
                 <a href="">Blotter Records</a>
                 <a href="l">Clearances</a>
                 <a href="">Permits</a>
@@ -90,8 +93,8 @@
                                 <label for="rOccup">Occupation</label>
                                 <input type="text" id="rOccup" name="rOccup" placeholder="Enter Occupation" required>
 
-                                <label for="logUser">Create Username</label>
-                                <input type="text" id="logUser" name="logUser" placeholder="Enter Username" required>
+                                <label for="uName">Create Username</label>
+                                <input type="text" id="uName" name="uName" placeholder="Enter Username" required>
 
                             </div>
                             <div class="right">
@@ -132,8 +135,8 @@
                                 <label for="rCitizen">Citizenship</label>
                                 <input type="text" id="rCitizen" name="rCitizen" placeholder="Enter Citizenship" required>
 
-                                <label for="logPswd"> Create Password</label>
-                                <input type="password" id="logPswd" name="logPswd" placeholder="Enter Password" required>
+                                <label for="uPswd"> Create Password</label>
+                                <input type="password" id="uPswd" name="uPswd" placeholder="Enter Password" required>
 
                             </div>
                             <div class="submit">
@@ -165,9 +168,9 @@
                             $rOccup = $_POST['rOccup'];
                             $rCitizen = $_POST['rCitizen'];
 
-                            $logName = ($rFirst . " " . $rMid . " " . $rLast);
-                            $logUser = $_POST['logUser'];
-                            $logPswd = $_POST['logPswd'];
+                            //$logName = ($rFirst . " " . $rMid . " " . $rLast);
+                            $uName = $_POST['uName'];
+                            $uPswd = $_POST['uPswd'];
 
                             $INSERT = "INSERT INTO tblResidents (rFirst, rMid, rLast, rAlias, rBday, rBplace, rAge, 
                             rCivil, rGender, rHouse, rPurok, rVoter, rPrecint, rPhilhealth, rEmail, rContact, rOccup, rCitizen)
@@ -196,9 +199,11 @@
                             );
                             $stmt->execute();
 
-                            $INSERT2 = "INSERT INTO tblLogs (logName, logUser, logPswd) VALUES (?, ?, ?)";
+                            $INSERT2 = "INSERT INTO tblUsers (uName, uPswd, uRID) VALUES (?, ?, ?)";
+                            $uRID = "SELECT rID from tblResidents WHERE rFirst='$rFirst' AND rMid='$rMid' AND rLast='$rLast'";
+
                             $stmt2 = $conn->prepare($INSERT2);
-                            $stmt2->bind_param("sss", $logName, $logUser, $logPswd);
+                            $stmt2->bind_param("ssi", $uName, $uPswd, $uRID);
                             $stmt2->execute();
                             echo "<br><p><font color=green>Successfully Registered</font color></p>";
                             $stmt->close();

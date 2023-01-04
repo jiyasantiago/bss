@@ -64,7 +64,7 @@
 
         td {
             table-layout: fixed;
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             text-align: center;
             justify-content: center;
         }
@@ -79,10 +79,12 @@
         </div>
 
         <div class="header-icons">
-            <i class="fas fa-bell"></i>
             <div class="account">
-                <img src="user.png" alt="">
+                <a href="logout.php"><img src="logout2.png" alt=""></a>
             </div>
+            <br>
+            <div><h5>&nbsp  Logout</h5></div>
+            
         </div>
     </header>
     <div class="container">
@@ -111,10 +113,12 @@
                     <div class="row">
                         <h4>Profiling Records</h4>
                         <div class="search_box">
-                            <input type="text" id="search" name="search" placeholder="Search">
-                            <button type="submit" name="search">
-                                <i class="fa fa-search"></i>
-                            </button>
+                            <form action="" method="post">
+                                <input type="text" id="search" name="valueToSearch" placeholder="Search" autocomplete="off">
+                                <button type="submit" name="search">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
                         </div>
                         <div class="add">
                             <a href="addResident.php"><button>Add Resident</button></a>
@@ -135,36 +139,52 @@
                         </thead>
                         <tbody>
                             <?php
-                            include('config.php');
-                            $sql = "SELECT * FROM tblResidents";
-                            $result = mysqli_query($conn, $sql);
-                            while ($data = mysqli_fetch_array($result)) {
-                            ?>
+                            function filterTable($sql)
+                            {
+                                $conn = new mysqli("localhost", "root", "", "bsis");
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+                                $filter_Result = $conn->query($sql) or die($conn->error);
+                                return $filter_Result;
+                            }
+                            if (isset($_POST['search'])) {
+                                $valueToSearch = $_POST['valueToSearch'];
+
+                                $sql = "SELECT * FROM tblResidents WHERE CONCAT('rID', 'rFirst', 'rMid', 
+                                'rLast', 'rAlias', 'rBday', 'rBplace', 'rAge', 'rCivil', 'rGender', 'rHouse',
+                                'rPurok', 'rVoter', 'rPrecint', 'rPhilhealth', 'rEmail', 'rContact', 'rOccup',
+                                'rCitizen') LIKE ('%" . $valueToSearch . "%')";
+                                $search_result = filterTable($sql);
+                            } else {
+                                $sql = "SELECT * FROM tblResidents";
+                                $search_result = filterTable($sql);
+                            }
+
+                            while ($row = $search_result->fetch_assoc()) : ?>
                                 <tr>
-                                    <td><?php echo $data['rID']; ?></td>
-                                    <td><?php echo $data['rFirst']; ?></td>
-                                    <td><?php echo $data['rMid']; ?></td>
-                                    <td><?php echo $data['rLast']; ?></td>
-                                    <td><?php echo $data['rAlias']; ?></td>
-                                    <td><?php echo $data['rBday']; ?></td>
-                                    <td><?php echo $data['rAge']; ?></td>
+                                    <td><?php echo $row['rID']; ?></td>
+                                    <td><?php echo $row['rFirst']; ?></td>
+                                    <td><?php echo $row['rMid']; ?></td>
+                                    <td><?php echo $row['rLast']; ?></td>
+                                    <td><?php echo $row['rAlias']; ?></td>
+                                    <td><?php echo $row['rBday']; ?></td>
+                                    <td><?php echo $row['rAge']; ?></td>
                                     <td>
                                         <div class="add">
-                                            <a href="viewResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="viewResident.php?rID=<?php echo $row['rID']; ?>">
                                                 <button><i class="fa fa-eye"></i></button>
                                             </a>
-                                            <a href="editResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="editResident.php?rID=<?php echo $row['rID']; ?>">
                                                 <button><i class="fa fa-pencil"></i></button>
                                             </a>
-                                            <a href="deleteResident.php?rID=<?php echo $data['rID']; ?>">
+                                            <a href="deleteResident.php?rID=<?php echo $row['rID']; ?>">
                                                 <button><i class="fa fa-trash"></i></button>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                            <?php
-                            }
-                            ?>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>

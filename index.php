@@ -26,34 +26,61 @@
 
             </p>
             <?php
-            $host = "localhost";
-            $user = "root";
-            $password = "";
-            $db = "bsis";
 
             if (isset($_POST['sub'])) {
 
-                $conn = new mysqli($host, $user, $password, $db);
+                include('config.php');
 
                 $uname = $_POST['uname'];
                 $pswd = $_POST['pswd'];
 
-                $sql = "SELECT * FROM tblLogs WHERE logUser='$uname' AND logPswd='$pswd'";
-                $result = mysqli_query($conn, $sql);
-                $numRows = mysqli_num_rows($result);
+                $sql = "SELECT * FROM tblAccess WHERE aUname='$uname' AND aPswd='$pswd'";
+                $result1 = mysqli_query($conn, $sql);
+                $numRows1 = mysqli_num_rows($result1);
 
-                if ($numRows == 1) {
-                    $logged_in_user = mysqli_fetch_assoc($result);
+                $sql = "SELECT * FROM tblUsers WHERE uName='$uname' AND uPswd='$pswd'";
+                $result2 = mysqli_query($conn, $sql);
+                $numRows2 = mysqli_num_rows($result2);
 
-                    if ($logged_in_user['logType'] == 'Chairman') {
+
+                if ($numRows1 > 0) {
+                    $user1 = mysqli_fetch_assoc($result1);
+
+                    if ($user1['aType'] == 'Chairman') {
+                        $_SESSION['loggedin'] = TRUE;
+                        $_SESSION['role'] = "Chairman";
+                        $_SESSION['userid'] = $numRows1['aID'];
+                        $_SESSION['username'] = $numRows1['aUname'];
+
                         header('location: chairman.html');
-                    } else if ($logged_in_user['logType'] == 'Secretary') {
-                        header('location: officials.php');
-                    } else if ($logged_in_user['logType'] == 'Resident') {
-                        header('location: ');
+                    } else if ($user1['aType'] == 'Secretary') {
+                        $_SESSION['loggedin'] = TRUE;
+                        $_SESSION['role'] = "Secretary";
+                        $_SESSION['userid'] = $numRows1['aID'];
+                        $_SESSION['username'] = $numRows1['aUname'];
+
+                        header('location: residents.php');
+                    } else if ($user1['aType'] == 'Kagawad') {
+                        $_SESSION['loggedin'] = TRUE;
+                        $_SESSION['role'] = "Kagawad";
+                        $_SESSION['userid'] = $numRows1['aID'];
+                        $_SESSION['username'] = $numRows1['aUname'];
+
+                        header('location: residents.php');
+                    } elseif ($numRows2 > 0) {
+                        $user2 = mysqli_fetch_assoc($result2);
+
+                        if (($user2['uName'] = $uname) and ($user2['uPswd'] = $pswd)) {
+                            $_SESSION['loggedin'] = TRUE;
+                            $_SESSION['role'] = "Resident";
+                            $_SESSION['userid'] = $numRows2['uID'];
+                            $_SESSION['username'] = $numRows2['uName'];
+
+                            header('location: applyC.php');
+                        }
+                    } else {
+                        echo "<br><p><font color=red>Incorrect username/password</font color></p>";
                     }
-                } else {
-                    echo "<br><p><font color=red>Incorrect username/password</font color></p>";
                 }
             }
             ?>

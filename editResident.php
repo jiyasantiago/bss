@@ -16,9 +16,12 @@
         </div>
 
         <div class="header-icons">
-            <i class="fas fa-bell"></i>
             <div class="account">
-                <img src="user.png" alt="">
+                <a href="logout.php"><img src="logout2.png" alt=""></a>
+            </div>
+            <br>
+            <div>
+                <h5>&nbsp Logout</h5>
             </div>
         </div>
     </header>
@@ -27,7 +30,7 @@
             <div class="side_navbar">
                 <span>Main Menu</span>
                 <a href="officials.php">Brgy. Officials</a>
-                <a href="residents.php"  class="active">Residents Info</a>
+                <a href="residents.php" class="active">Residents Info</a>
                 <a href="">Blotter Records</a>
                 <a href="l">Clearances</a>
                 <a href="">Permits</a>
@@ -197,4 +200,5 @@
         </div>
     </div>
 </body>
+
 </html>

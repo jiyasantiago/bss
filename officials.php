@@ -72,7 +72,7 @@
 
         table,
         th {
-            padding: 1rem 2.5rem;
+            padding: 1rem 3rem;
             justify-content: center;
         }
 
@@ -91,9 +91,12 @@
         </div>
 
         <div class="header-icons">
-            <i class="fas fa-bell"></i>
             <div class="account">
-                <img src="user.png" alt="">
+                <a href="logout.php"><img src="logout2.png" alt=""></a>
+            </div>
+            <br>
+            <div>
+                <h5>&nbsp Logout</h5>
             </div>
         </div>
     </header>

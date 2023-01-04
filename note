@@ -1,0 +1,78 @@
+<?php
+include('config.php');
+$sql = "SELECT * FROM tblResidents";
+$result = mysqli_query($conn, $sql);
+while ($data = mysqli_fetch_array($result)) {
+?>
+    <tr>
+        <td><?php echo $data['rID']; ?></td>
+        <td><?php echo $data['rFirst']; ?></td>
+        <td><?php echo $data['rMid']; ?></td>
+        <td><?php echo $data['rLast']; ?></td>
+        <td><?php echo $data['rAlias']; ?></td>
+        <td><?php echo $data['rBday']; ?></td>
+        <td><?php echo $data['rAge']; ?></td>
+        <td>
+            <div class="add">
+                <a href="viewResident.php?rID=<?php echo $data['rID']; ?>">
+                    <button><i class="fa fa-eye"></i></button>
+                </a>
+                <a href="editResident.php?rID=<?php echo $data['rID']; ?>">
+                    <button><i class="fa fa-pencil"></i></button>
+                </a>
+                <a href="deleteResident.php?rID=<?php echo $data['rID']; ?>">
+                    <button><i class="fa fa-trash"></i></button>
+                </a>
+            </div>
+        </td>
+    </tr>
+<?php
+}
+?>
+<?php
+
+if (isset($_POST['search'])) {
+    $valueToSearch = $_POST['valueToSearch'];
+
+    $query = "SELECT * FROM tblResidents WHERE CONCAT('rID', 'rFirst', 'rMid', 
+    'rLast', 'rAlias', 'rBday', 'rBplace', 'rAge', 'rCivil', 'rGender', 'rHouse',
+    'rPurok', 'rVoter', 'rPrecint', 'rPhilhealth', 'rEmail', 'rContact', 'rOccup',
+    'rCitizen') LIKE ('%" . $valueToSearch . "%')";
+    $search_result = filterTable($query);
+} else {
+    $query = "SELECT * FROM tblResidents";
+    $search_result = filterTable($query);
+}
+function filterTable($query)
+{
+    $conn = new mysqli("localhost", "root", "", "bsis");
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $filter_Result = $conn->query($query) or die($conn->error);
+    return $filter_Result;
+}
+while ($row = $search_result->fetch_assoc()) : ?>
+    <tr>
+        <td><?php echo $row['rID']; ?></td>
+        <td><?php echo $row['rFirst']; ?></td>
+        <td><?php echo $row['rMid']; ?></td>
+        <td><?php echo $row['rLast']; ?></td>
+        <td><?php echo $row['rAlias']; ?></td>
+        <td><?php echo $row['rBday']; ?></td>
+        <td><?php echo $row['rAge']; ?></td>
+        <td>
+            <div class="add">
+                <a href="viewResident.php?rID=<?php echo $row['rID']; ?>">
+                    <button><i class="fa fa-eye"></i></button>
+                </a>
+                <a href="editResident.php?rID=<?php echo $row['rID']; ?>">
+                    <button><i class="fa fa-pencil"></i></button>
+                </a>
+                <a href="deleteResident.php?rID=<?php echo $row['rID']; ?>">
+                    <button><i class="fa fa-trash"></i></button>
+                </a>
+            </div>
+        </td>
+    </tr>
+<?php endwhile; ?>
